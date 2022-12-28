@@ -1,9 +1,20 @@
+import { useState, useEffect } from "react";
 const Clock = () => {
+    const [date, setDate] = useState(new Date());
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setDate(new Date());
+        }, 1000);//estableciendo intervalo de actualización de hora actual cada segundo
+        return () => clearInterval(interval);//removiendo el intervalo
+    }, []);
+    const hora = date.getHours() * 30; //se moverá 30 grados cada hora, * 12 = 360 grados
+    const minuto = date.getMinutes() * 6; //6 grados cada minuto
+    const segundo = date.getSeconds() * 6; //6 grados cada segundo
     return (
         <div className="clock">
-            <div className="hand hour" data-hour-hand></div>
-            <div className="hand minute" data-minute-hand></div>
-            <div className="hand second" data-second-hand></div>
+            <div className="hand hour" style={{ transform: 'rotate(' + hora + 'deg)' }} data-hour-hand></div>
+            <div className="hand minute" style={{ transform: 'rotate(' + minuto + 'deg)' }} data-minute-hand></div>
+            <div className="hand second" style={{ transform: 'rotate(' + segundo + 'deg)' }} data-second-hand></div>
             <div className="number number1">1</div>
             <div className="number number2">2</div>
             <div className="number number3">3</div>
